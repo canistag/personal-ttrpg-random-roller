@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+        >
+        
+    </head>
+    <body>
+        <main class="container">
+            <button onclick="restart()" id="restartButton">Restart</button>
+        <button onclick="advanceTime()"id="advanceTimeButton">Advance Time</button>
+        
+        
+        
+        <div id="dayExploration" >
+            <div id="hourCounter">Hours of Sunlight: 
+                <input id="hourHolder" disabled>
+            </div> 
+            <div id="weather"></div>
+            <div id="terrain"></div>
+            <div id="partySpeed"></div>
+            <div id="partyStamina"></div>
+            <p></p>
+            <div id="encounter"></div>
+            <div id="encounterMsg"></div>
+            <div id="campMessage"></div>
+        </div>
+        <div id="campEncounters">
+            <div id="nightCounter" hidden>
+                Hours til Sunrise: <input id="nightHolder" disabled>
+            </div>
+        </div>
+        <script src="{{ url_for('static', filename='encounters.js') }}"></script>
+        </main>
+        
+        
+        
+    </body>
+
+</html>
