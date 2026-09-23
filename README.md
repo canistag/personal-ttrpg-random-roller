@@ -17,7 +17,7 @@ A day/night event rolling tool for a personal TTRPG campaign. Built to practice 
 
 ## How to Run Locally
    ```bash
-   git clone https://github.com/tigosun-dev/personal-ttrpg-random-roller.git
+   git clone https://github.com/canistag/personal-ttrpg-random-roller.git
    cd personal-ttrpg-random-roller
    python app.py
 
