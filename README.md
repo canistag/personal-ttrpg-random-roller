@@ -1,6 +1,10 @@
 # TTRPG Random Roller
 
-A day/night event rolling tool for a personal TTRPG campaign. Built to practice SQLite3, vanilla JavaScript, Flask, and Pico CSS.
+<img width="1482" height="432" alt="image" src="https://github.com/user-attachments/assets/4e762c4f-94dd-4259-91ed-a79f2d0a9d54" />
+
+<a href="https://canistag.pythonanywhere.com/ttrpg">Live Example</a>
+
+A day/night event rolling tool for a personal TTRPG campaign. Built to practice SQLite3, vanilla JavaScript, Flask, Pico CSS, and PythonAnywhere.
 
 ## Tech Stack
 
