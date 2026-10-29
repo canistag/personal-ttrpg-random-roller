@@ -3,106 +3,40 @@ import sqlite3
 
 app = Flask(__name__)
 
+# Tables the API is allowed to serve. The URL only gets through if it
+# matches this list — table names can't be passed as SQL parameters,
+# so a whitelist is what keeps the query below safe.
+TABLES = {
+    'weather': 'weather',
+    'terrain': 'terrain',
+    'encounter': 'encounter',
+    'ancientClue': 'ancientClue',
+    'naturalResource': 'naturalResource',
+    'race': 'race',
+    'class': 'class',
+    'undead': 'undead',
+    'combatant': 'combatant',
+    'Convoy': 'Convoy',
+}
 
-
-# if url => run function
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-@app.route('/api/weather')
-def get_weather():
+def get_all_rows(table):
     conn = sqlite3.connect('rollerDB')
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM weather')
+    # `table` only ever comes from the TABLES whitelist above
+    # never straight from the URL
+    cursor.execute(f'SELECT * FROM {table}')
     rows = cursor.fetchall()
     conn.close()
-    return jsonify(rows)
+    return rows
 
-@app.route('/api/terrain')
-def get_terrain():
-    conn = sqlite3.connect('rollerDB')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM terrain')
-    rows = cursor.fetchall()
-    conn.close()
-    return jsonify(rows)
 
-@app.route('/api/encounter')
-def get_encounterType():
-    conn = sqlite3.connect('rollerDB')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM encounter')
-    rows = cursor.fetchall()
-    conn.close()
-    return jsonify(rows)
+# shape are unchanged, so the frontend (encounters.js) works as-is
+@app.route('/api/<name>')
+def get_table(name):
+    if name not in TABLES:
+        abort(404)
+    return jsonify(get_all_rows(TABLES[name]))
 
-@app.route('/api/ancientClue')
-def get_ancientClue():
-    conn = sqlite3.connect('rollerDB')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM ancientClue')
-    rows = cursor.fetchall()
-    conn.close()
-    return jsonify(rows)
-
-@app.route('/api/naturalResource')
-def get_naturalResource():
-    conn = sqlite3.connect('rollerDB')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM naturalResource')
-    rows = cursor.fetchall()
-    conn.close()
-    return jsonify(rows)
-
-@app.route('/api/race')
-def get_race():
-    conn = sqlite3.connect('rollerDB')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM race')
-    rows = cursor.fetchall()
-    conn.close()
-    return jsonify(rows)
-
-@app.route('/api/class')
-def get_class():
-    conn = sqlite3.connect('rollerDB')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM class')
-    rows = cursor.fetchall()
-    conn.close()
-    return jsonify(rows)
-
-@app.route('/api/undead')
-def get_undead():
-    conn = sqlite3.connect('rollerDB')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM undead')
-    rows = cursor.fetchall()
-    conn.close()
-    return jsonify(rows)
-
-@app.route('/api/combatant')
-def get_combatant():
-    conn = sqlite3.connect('rollerDB')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM combatant')
-    rows = cursor.fetchall()
-    conn.close()
-    return jsonify(rows)
-
-@app.route('/api/Convoy')
-def get_convoy():
-    conn = sqlite3.connect('rollerDB')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM Convoy')
-    rows = cursor.fetchall()
-    conn.close()
-    return jsonify(rows)
 
 if __name__ == '__main__':
-    app.run(debug=True)
-
-## open terminal
-## type python app.py
-## follow url
+    app.run()
