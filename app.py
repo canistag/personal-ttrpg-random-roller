@@ -4,8 +4,8 @@ import sqlite3
 app = Flask(__name__)
 
 # Tables the API is allowed to serve. The URL only gets through if it
-# matches this list — table names can't be passed as SQL parameters,
-# so a whitelist is what keeps the query below safe.
+# matches this list — table names can't be passed as SQL parameters
+# so a whitelist is what keeps the query below safe
 TABLES = {
     'weather': 'weather',
     'terrain': 'terrain',
@@ -19,6 +19,7 @@ TABLES = {
     'Convoy': 'Convoy',
 }
 
+
 def get_all_rows(table):
     conn = sqlite3.connect('rollerDB')
     cursor = conn.cursor()
@@ -30,6 +31,12 @@ def get_all_rows(table):
     return rows
 
 
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+
+# One route replaces the old per-table endpoints. URLs and the JSON
 # shape are unchanged, so the frontend (encounters.js) works as-is
 @app.route('/api/<name>')
 def get_table(name):
