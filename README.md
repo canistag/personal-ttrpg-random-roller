@@ -4,14 +4,12 @@
 
 <a href="https://canistag.pythonanywhere.com/ttrpg">Live Example</a>
 
-A day/night event rolling tool for a personal TTRPG campaign. Built to practice SQLite3, vanilla JavaScript, Flask, Pico CSS, and PythonAnywhere.
-
-## Tech Stack
+A day/night event rolling tool for a personal TTRPG campaign.
 
 - HTML/CSS (Pico CSS framework)
 - JavaScript (frontend logic)
-- Flask
-- SQLite3
+- Flask 
+- SQLite3 (storage for encounters, etc.)
 
 ## Features
 
@@ -20,9 +18,13 @@ A day/night event rolling tool for a personal TTRPG campaign. Built to practice 
 - Night events coming soon
 
 ## How to Run Locally
-   ```bash
+```bash
    git clone https://github.com/canistag/personal-ttrpg-random-roller.git
    cd personal-ttrpg-random-roller
    python app.py
 
 Open http://localhost:5000
+```
+
+## Refactor Notes
+Initially, each of the ten tables had a identical copy/pasted endpoint (api/weather, api/encounter, etc.). I made the decision to consolidate these into a single route backed by a table whitelist. The table names can't be passed as a SQL parameter, so this keeps the dynamic query from breaking. 
